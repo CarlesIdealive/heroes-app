@@ -13,6 +13,8 @@ export const HomePage = () => {
   const activeTab = searchParams.get("tab") || "all";
   const page = searchParams.get("page") || "1";
   const limit = searchParams.get("limit") || "6"; 
+  const category = searchParams.get("category") || "all";
+
   // Validate and set the selected tab
   const selectedTab = useMemo(() => {
     const validTabs = ["all", "favorites", "heroes", "villains"];
@@ -20,7 +22,7 @@ export const HomePage = () => {
   }, [activeTab]);
 
 
-  const { data: heroesResponse } = usePaginatedHero(Number(page), Number(limit));
+  const { data: heroesResponse } = usePaginatedHero(Number(page), Number(limit), category);
   const { data: heroesSummary } = useHeroSummary();
 
 
@@ -43,6 +45,8 @@ export const HomePage = () => {
               value="all"
               onClick={() => setSearchParams( (prev) => { 
                 prev.set("tab", "all"); 
+                prev.set("category", "all");
+                prev.set("page", "1");
                 return prev
               })}>
               All Characters ({heroesSummary?.totalHeroes ?? 0})
@@ -61,6 +65,8 @@ export const HomePage = () => {
               value="heroes"
               onClick={() => setSearchParams( (prev) => { 
                 prev.set("tab", "heroes"); 
+                prev.set("category", "hero");
+                prev.set("page", "1");
                 return prev
               })}
             >
@@ -70,6 +76,8 @@ export const HomePage = () => {
                 value="villains"
                 onClick={() => setSearchParams( (prev) => { 
                   prev.set("tab", "villains"); 
+                  prev.set("category", "villain");
+                  prev.set("page", "1");
                   return prev
               })}
             >
@@ -86,11 +94,11 @@ export const HomePage = () => {
           </TabsContent>
           <TabsContent value="heroes" className="mt-4">
             {/* Character Grid */}
-            <HeroGrid heroes={[]} />
+            <HeroGrid heroes={heroesResponse?.heroes ?? []} />
           </TabsContent>
           <TabsContent value="villains" className="mt-4">
             {/* Character Grid */}
-            <HeroGrid heroes={[]} />
+            <HeroGrid heroes={heroesResponse?.heroes ?? []} />
           </TabsContent>
         </Tabs>
 
