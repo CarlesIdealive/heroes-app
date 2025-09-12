@@ -8,7 +8,7 @@ export const CustomNavigationBar = () => {
 
     const {pathname} = useLocation();
     const isActive = (path: string) => {
-        console.log({pathname, path});
+        // console.log({pathname, path});
         
         return pathname === path;
     }

@@ -1,16 +1,25 @@
-import {
-  Heart,
-} from "lucide-react"
+import { useState } from "react"
+import { Heart } from "lucide-react"
+import { useQuery } from "@tanstack/react-query"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CustomBreadcrumbs, CustomPagination } from "@/components/custom"
 import { CustomJumbotron } from "@/components/custom/CustomJumbotron"
 import { HeroGrid, HeroStats } from "@/heroes/components"
-import { useState } from "react"
-import { CustomBreadcrumbs, CustomPagination } from "@/components/custom"
+import { getHeroesByPageAction } from "@/heroes/actions/getHeroes-byPage.actions"
 
 export const HomePage = () => {
 
   const [activeTab, setActiveTab] = useState<'all' | 'favorites' | 'heroes' | 'villains'>("all")
 
+  const { data } = useQuery({
+    queryKey: ['heroesByPage'],
+    queryFn: () => getHeroesByPageAction(),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  })
+
+  // useEffect(() => {
+  //   getHeroesByPageAction().then()
+  // }, [])
 
   return (
     <>
