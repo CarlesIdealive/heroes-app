@@ -1,4 +1,4 @@
-import { use, useMemo } from "react";
+import { use } from "react";
 import { Heart, Zap } from "lucide-react"
 import { HeroStatCard } from "./HeroStatCard"
 import { Badge } from "@/components/ui/badge"
@@ -10,6 +10,9 @@ export const HeroStats = () => {
   const { data: heroesSummary } = useHeroSummary();
   const { favoriteCount } = use(FavoriteHeroContext);
 
+  if (!heroesSummary) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -30,7 +33,7 @@ export const HeroStats = () => {
             icon={<Heart className="h-4 w-4 text-muted-foreground" />}
         >   
             <div className="text-lg font-bold">{favoriteCount}</div>
-            <p className="text-xs text-muted-foreground">{((favoriteCount / heroesSummary!.heroCount)*100).toFixed(2)} of total</p>
+            <p className="text-xs text-muted-foreground">{((favoriteCount / heroesSummary.totalHeroes)*100).toFixed(2)}% of total</p>
         </HeroStatCard>
 
         <HeroStatCard
