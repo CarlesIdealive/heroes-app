@@ -1,5 +1,5 @@
 import { heroApi } from "../api/hero.api";
-import type { Hero, HeroesResponse } from "../interfaces";
+import type { Hero } from "../interfaces";
 
 
 interface Options {

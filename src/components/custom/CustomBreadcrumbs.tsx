@@ -29,7 +29,7 @@ export const CustomBreadcrumbs = ({ currentPage, breadcrumbs=[] }: Props) => {
                 </BreadcrumbLink>
             </BreadcrumbItem>
             {
-                breadcrumbs.map((breadcrumb, index) => (
+                breadcrumbs.map((breadcrumb) => (
                     <div className="flex items-center">
                         <BreadcrumbItem>
                             <BreadcrumbSeparator>
